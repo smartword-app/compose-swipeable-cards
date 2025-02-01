@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Compose Swipeable Cards"
-include(":app")
+include(":example")
 include(":swipeable_cards")
