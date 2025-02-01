@@ -2,8 +2,9 @@
 
 A lightweight, modern Android library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
 
+[![](https://jitpack.io/v/tRamboli/compose-swipeable-cards.svg)](https://jitpack.io/#tRamboli/compose-swipeable-cards)
+
 [![](https://jitpack.io/v/yourusername/ComposeSwipeableCards.svg)](https://jitpack.io/#yourusername/ComposeSwipeableCards)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <img src="/api/placeholder/250/500" alt="Demo GIF" />
 
