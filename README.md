@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="/assets/cards.png" alt="Compose Swipeable Cards" width="200" height="200">
+</p>
+
 # Compose Swipeable Cards
 
 A lightweight, modern Android library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
@@ -33,7 +37,7 @@ allprojects {
 2. Add the dependency to your app's build.gradle:
 ```gradle
 dependencies {
-    implementation 'com.github.yourusername:ComposeSwipeableCards:1.0.0'
+    implementation 'com.github.tRamboli:compose-swipeable-cards:1.0.2'
 }
 ```
 
