@@ -4,11 +4,9 @@
 
 # Compose Swipeable Cards
 
+[![](https://jitpack.io/v/smartword-app/compose-swipeable-cards.svg)](https://jitpack.io/#smartword-app/compose-swipeable-cards)
+
 A lightweight, modern Android library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
-
-[![](https://jitpack.io/v/tRamboli/compose-swipeable-cards.svg)](https://jitpack.io/#tRamboli/compose-swipeable-cards)
-
-[![](https://jitpack.io/v/yourusername/ComposeSwipeableCards.svg)](https://jitpack.io/#yourusername/ComposeSwipeableCards)
 
 ## Video Example
 https://github.com/user-attachments/assets/70cb20fc-38c6-4fb3-a9d6-dca79f9e005e
@@ -38,7 +36,7 @@ allprojects {
 2. Add the dependency to your app's build.gradle:
 ```gradle
 dependencies {
-    implementation 'com.github.tRamboli:compose-swipeable-cards:1.0.2'
+    implementation 'com.github.smartword-app:compose-swipeable-cards:1.0.3'
 }
 ```
 
