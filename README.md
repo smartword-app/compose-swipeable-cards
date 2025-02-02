@@ -11,8 +11,7 @@ A lightweight, modern Android library that provides smooth Tinder-style card swi
 [![](https://jitpack.io/v/yourusername/ComposeSwipeableCards.svg)](https://jitpack.io/#yourusername/ComposeSwipeableCards)
 
 ## Video Example
-[![Watch the video](https://img.youtube.com/vi/ChJQ8RW7LPo/0.jpg)](https://www.youtube.com/watch?v=ChJQ8RW7LPo)
-
+https://github.com/user-attachments/assets/70cb20fc-38c6-4fb3-a9d6-dca79f9e005e
 
 ## Features
 - 🎯 Smooth, physics-based swipe animations
