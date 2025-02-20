@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -31,10 +32,12 @@ import com.spartapps.swipeable.demo.utils.rememberDominantColor
 
 @Composable
 fun CardItem(
+    modifier: Modifier = Modifier,
     cardData: CardData,
+    offset: Offset,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(550.dp),
         border = CardDefaults.outlinedCardBorder(),
@@ -91,6 +94,13 @@ fun CardItem(
                                 color = Color.White.copy(alpha = 0.8f),
                                 style = MaterialTheme.typography.bodyMedium,
                             )
+
+                            Text(
+                                text = offset.toString(),
+                                fontSize = 15.sp,
+                                color = Color.White,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
                         }
                     }
                 }
@@ -105,6 +115,7 @@ fun CardItemPreview() {
     ComposeSwipeableCardsTheme {
         CardItem(
             cardData = sampleData.first(),
+            offset = Offset.Zero
         )
     }
 }

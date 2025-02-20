@@ -1,5 +1,6 @@
 package com.spartapps.swipeable.demo.cards_screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,36 +16,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spartapps.swipeable.demo.data.sampleData
+import com.spartapps.swipeable.demo.data.largeData
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
-import com.spartapps.swipeablecards.ui.SwipeableCards
+import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 
 @Composable
 fun CardsScreen(
     modifier: Modifier,
 ) {
     val state = rememberSwipeableCardsState(
-        itemCount = { sampleData.size }
+        itemCount = { largeData.size }
     )
 
     Column(
         modifier = modifier,
     ) {
-        SwipeableCards(
+        LazySwipeableCards(
             modifier = Modifier.padding(10.dp),
-            items = sampleData,
             state = state,
-            onSwipe = { _, _ ->
-
+            onSwipe = { item, direction ->
+                Log.d("CardsScreen", "onSwipe: $item, $direction")
+            },
+        ) {
+            items(largeData) { item, offset ->
+                CardItem(
+                    cardData = item,
+                    offset = offset
+                )
             }
-        ) { item, _ ->
-            CardItem(
-                cardData = item,
-            )
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -54,12 +59,12 @@ fun CardsScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
 
             Text(
-                text = "${state.currentCardIndex + 1} of ${sampleData.size}",
+                text = "${state.currentCardIndex + 1} of ${largeData.size}",
             )
 
             FloatingActionButton(

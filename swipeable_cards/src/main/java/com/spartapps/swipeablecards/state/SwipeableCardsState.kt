@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Offset
 
 /**
  * Manages the state of a SwipeableCards stack.
@@ -24,11 +25,17 @@ class SwipeableCardsState(
     private val itemCount: () -> Int,
 ) {
 
+    var dragOffset by mutableStateOf(Offset.Zero)
+
     var currentCardIndex by mutableIntStateOf(initialCardIndex)
         private set
 
     var canSwipeBack by mutableStateOf(currentCardIndex > 0)
         private set
+
+    fun onDragOffsetChange(offset: Offset) {
+        dragOffset = offset
+    }
 
     fun goBack() {
         if (currentCardIndex > 0) {

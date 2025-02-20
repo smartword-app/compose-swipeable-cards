@@ -25,6 +25,7 @@ internal fun SwipeableCard(
     animations: SwipeableCardsAnimations,
     factors: SwipeableCardsFactors,
     draggable: Boolean,
+    onDragOffsetChange: (Offset) -> Unit,
     onSwipe: (SwipeableCardDirection) -> Unit,
     content: @Composable (Offset) -> Unit,
 ) {
@@ -79,6 +80,7 @@ internal fun SwipeableCard(
                                 offset += dragAmount.copy(
                                     x = dragAmount.x * properties.draggingAcceleration
                                 )
+                                onDragOffsetChange(offset)
                             }
                         )
                     }

@@ -26,7 +26,7 @@ data class SwipeableCardsFactors(
         state: SwipeableCardsState,
         props: SwipeableCardsProperties,
     ) -> Offset = { index, state, props ->
-        val offset = props.stackedCardsOffset.value * (index - state.currentCardIndex)
-        Offset(-offset, offset)
+        val offset = props.stackedCardsOffset.value * (props.visibleCardsInStack - 1 - (index - state.currentCardIndex))
+        Offset(offset, -offset)
     },
 )

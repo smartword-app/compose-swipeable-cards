@@ -40,6 +40,16 @@ import com.spartapps.swipeablecards.ui.animation.SwipeableCardsAnimations
  * }
  * ```
  */
+@Deprecated(
+    message = "SwipeableCards is deprecated. Use LazySwipeableCards instead for better performance and lazy loading.",
+    replaceWith = ReplaceWith(
+        expression = "LazySwipeableCards(state, properties, animations, factors, onSwipe) { items(items) { cardContent(it, Offset.Zero) } }",
+        imports = ["com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards"]
+    )
+)
+/**
+ * @deprecated Use [LazySwipeableCards] instead for better performance and lazy loading.
+ */
 @Composable
 fun <T> SwipeableCards(
     modifier: Modifier = Modifier,
@@ -85,6 +95,9 @@ fun <T> SwipeableCards(
                     } else {
                         true
                     },
+                    onDragOffsetChange = {
+                        state.onDragOffsetChange(it)
+                    }
                 ) { offset ->
                     cardContent(item, offset)
                 }

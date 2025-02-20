@@ -45,3 +45,18 @@ val sampleData = listOf(
         image = R.drawable.trees
     )
 )
+
+val largeData = (0..1000).map {
+    CardData(
+        id = it,
+        title = "Mountain Sunrise",
+        description = "A breathtaking mountain view at sunrise with mist covering the valleys.",
+        image = listOf(
+            R.drawable.lighthouse,
+            R.drawable.home,
+            R.drawable.deseret,
+            R.drawable.waterfall,
+            R.drawable.lake,
+        )[it % 5],
+    )
+}

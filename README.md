@@ -2,16 +2,17 @@
   <img src="/assets/cards.png" alt="Compose Swipeable Cards" width="200" height="200">
 </p>
 
-# Compose Swipeable Cards
+# Compose Lazy Swipeable Cards
 
 [![](https://jitpack.io/v/smartword-app/compose-swipeable-cards.svg)](https://jitpack.io/#smartword-app/compose-swipeable-cards)
 
-A lightweight, modern Android library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
+An efficient, lightweight, modern Jetpack Compose library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
 
 ## Video Example
 https://github.com/user-attachments/assets/70cb20fc-38c6-4fb3-a9d6-dca79f9e005e
 
 ## Features
+- ⚡️ Lazy loading to support large data
 - 🎯 Smooth, physics-based swipe animations
 - 🎨 Fully customizable card content
 - 🔄 Left/Right swipe actions
@@ -36,7 +37,7 @@ allprojects {
 2. Add the dependency to your app's build.gradle:
 ```gradle
 dependencies {
-    implementation 'com.github.smartword-app:compose-swipeable-cards:1.0.3'
+    implementation 'com.github.smartword-app:compose-swipeable-cards:1.0.4'
 }
 ```
 
@@ -51,9 +52,9 @@ fun SwipeableCardsExample() {
         initialCardIndex = 0,
         itemCount = { profiles.size }
     )
-    
-    SwipeableCards(
-        items = profiles,
+
+    LazySwipeableCards<CardData>(
+        modifier = Modifier.padding(10.dp),
         state = state,
         onSwipe = { profile, direction ->
             when (direction) {
@@ -61,9 +62,13 @@ fun SwipeableCardsExample() {
                 SwipeableCardDirection.Left -> { /* Handle left swipe */ }
             }
         }
-    ) { profile, offset ->
-        // Your card content here
-        ProfileCard(profile)
+    ) {
+        items(profiles) { profile, offset ->
+            ProfileCard(
+                profile = profile,
+                offset = offset
+            )
+        }
     }
 }
 ```
@@ -100,7 +105,7 @@ SwipeableCards(
 
 ### Custom Factors
 ```kotlin
-SwipeableCards(
+LazySwipeableCards(
     factors = SwipeableCardsFactors(
         rotationFactor = { offset ->
             // Custom rotation calculation
@@ -112,7 +117,7 @@ SwipeableCards(
             Offset(-offset, offset)
         }
     )
-)
+) { ... }
 ```
 
 ## Example Implementation
@@ -129,8 +134,8 @@ data class Profile(
 @Composable
 fun DatingCardStack(profiles: List<Profile>) {
     val state = rememberSwipeableCardsState(itemCount = { profiles.size })
-    
-    SwipeableCards(
+
+    LazySwipeableCards(
         modifier = Modifier.fillMaxSize(),
         items = profiles,
         state = state,
