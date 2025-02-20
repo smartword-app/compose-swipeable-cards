@@ -145,25 +145,27 @@ fun DatingCardStack(profiles: List<Profile>) {
                 SwipeableCardDirection.Left -> handleDislike(profile)
             }
         }
-    ) { profile, offset ->
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .height(400.dp)
-        ) {
-            Column {
-                AsyncImage(
-                    model = profile.imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                )
-                Text(
-                    text = "${profile.name}, ${profile.age}",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(16.dp)
-                )
+    ) {
+        items(profiles) { profile, offset ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .height(400.dp)
+            ) {
+                Column {
+                    AsyncImage(
+                        model = profile.imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                    )
+                    Text(
+                        text = "${profile.name}, ${profile.age}",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
             }
         }
     }
