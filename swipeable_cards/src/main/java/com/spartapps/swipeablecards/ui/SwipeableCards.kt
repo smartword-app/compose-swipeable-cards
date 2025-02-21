@@ -48,7 +48,7 @@ import com.spartapps.swipeablecards.ui.animation.SwipeableCardsAnimations
     )
 )
 /**
- * @deprecated Use [LazySwipeableCards] instead for better performance and lazy loading.
+ * @deprecated Use LazySwipeableCards instead for better performance and lazy loading.
  */
 @Composable
 fun <T> SwipeableCards(

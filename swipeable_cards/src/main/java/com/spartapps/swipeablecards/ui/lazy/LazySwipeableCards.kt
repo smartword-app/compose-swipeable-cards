@@ -75,14 +75,10 @@ fun <T> LazySwipeableCards(
         mutableStateMapOf<Int, Animatable<Offset, *>>()
     }
 
-    fun fillMap(indexes: List<Int>) {
+    LaunchedEffect(indexes) {
         indexes.forEach { index ->
             animatables.putIfAbsent(index, Animatable(Offset.Zero, Offset.VectorConverter))
         }
-    }
-
-    LaunchedEffect(indexes) {
-        fillMap(indexes)
     }
 
     LaunchedEffect(state.currentCardIndex) {
@@ -111,7 +107,7 @@ fun <T> LazySwipeableCards(
 
         val maxHeight = indexesWithPlaceables.values
             .flatMap { it }
-            .maxOf { it.height }
+            .maxOfOrNull { it.height } ?: 0
 
         layout(width = constraints.maxWidth, height = maxHeight) {
             indexesWithPlaceables.forEach { (index, placeables) ->
