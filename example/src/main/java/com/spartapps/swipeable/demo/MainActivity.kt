@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.spartapps.swipeable.demo.cards_screen.CardsScreen
+import com.spartapps.swipeable.demo.data.largeData
 import com.spartapps.swipeable.demo.ui.theme.ComposeSwipeableCardsTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
             ComposeSwipeableCardsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     CardsScreen(
+                        data = largeData,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
