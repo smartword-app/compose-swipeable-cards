@@ -13,19 +13,28 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spartapps.swipeable.demo.data.largeData
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
+import kotlinx.coroutines.delay
 
 @Composable
 fun CardsScreen(
     modifier: Modifier,
 ) {
+
+    val data by produceState(emptyList()) {
+        delay(1000)
+        value = largeData
+    }
+
     val state = rememberSwipeableCardsState(
-        itemCount = { largeData.size }
+        itemCount = { data.size }
     )
 
     Column(
@@ -38,7 +47,7 @@ fun CardsScreen(
                 Log.d("CardsScreen", "onSwipe: $item, $direction")
             },
         ) {
-            items(largeData) { item, offset ->
+            items(data) { item, offset ->
                 CardItem(
                     cardData = item,
                     offset = offset
@@ -64,7 +73,7 @@ fun CardsScreen(
             }
 
             Text(
-                text = "${state.currentCardIndex + 1} of ${largeData.size}",
+                text = "${state.currentCardIndex + 1} of ${data.size}",
             )
 
             FloatingActionButton(

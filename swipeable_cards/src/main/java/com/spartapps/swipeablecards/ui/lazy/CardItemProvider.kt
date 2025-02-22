@@ -5,8 +5,8 @@ import androidx.compose.foundation.lazy.layout.LazyLayoutItemProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import com.spartapps.swipeablecards.state.SwipeableCardsState
 import com.spartapps.swipeablecards.ui.SwipeableCard
 import com.spartapps.swipeablecards.ui.SwipeableCardDirection
@@ -23,9 +23,7 @@ fun <T>rememberItemProvider(
     onSwipe: (T, SwipeableCardDirection) -> Unit,
     customLazyListScope: LazySwipeableCardsScope<T>.() -> Unit
 ): CardItemProvider<T> {
-    val customLazyListScopeState = remember { mutableStateOf(customLazyListScope) }.apply {
-        value = customLazyListScope
-    }
+    val customLazyListScopeState = rememberUpdatedState(customLazyListScope)
 
     return remember {
         CardItemProvider<T>(

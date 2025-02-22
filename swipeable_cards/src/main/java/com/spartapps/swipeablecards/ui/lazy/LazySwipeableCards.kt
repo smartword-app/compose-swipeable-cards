@@ -67,9 +67,8 @@ fun <T> LazySwipeableCards(
         onSwipe = onSwipe,
         customLazyListScope = content,
     )
-    val indexes = remember(state.currentCardIndex) {
-        itemProvider.getVisibleCardIndexes()
-    }
+
+    val indexes = itemProvider.getVisibleCardIndexes()
 
     val animatables = remember {
         mutableStateMapOf<Int, Animatable<Offset, *>>()
@@ -81,7 +80,7 @@ fun <T> LazySwipeableCards(
         }
     }
 
-    LaunchedEffect(state.currentCardIndex) {
+    LaunchedEffect(indexes) {
         animatables.forEach { index, animatable ->
             launch {
                 animatable.animateTo(
