@@ -111,6 +111,10 @@ LazySwipeableCards(
             // Custom rotation calculation
             offset.x / 50
         },
+        scaleFactor = { index, state, props ->
+            // Custom behind card scaling based on currest state
+            1f
+        },
         cardOffsetCalculation = { index, state, props ->
             // Custom card position calculation
             val offset = props.stackedCardsOffset.value * (index - state.currentCardIndex)
