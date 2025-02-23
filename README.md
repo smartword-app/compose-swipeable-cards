@@ -37,7 +37,7 @@ allprojects {
 2. Add the dependency to your app's build.gradle:
 ```gradle
 dependencies {
-    implementation 'com.github.smartword-app:compose-swipeable-cards:1.0.6'
+    implementation 'com.github.smartword-app:compose-swipeable-cards:1.0.7'
 }
 ```
 
