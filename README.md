@@ -63,7 +63,7 @@ fun SwipeableCardsExample() {
             }
         }
     ) {
-        items(profiles) { profile, offset ->
+        items(profiles) { profile, index, offset ->
             ProfileCard(
                 profile = profile,
                 offset = offset
@@ -150,7 +150,7 @@ fun DatingCardStack(profiles: List<Profile>) {
             }
         }
     ) {
-        items(profiles) { profile, offset ->
+        items(profiles) { profile, index, offset ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
