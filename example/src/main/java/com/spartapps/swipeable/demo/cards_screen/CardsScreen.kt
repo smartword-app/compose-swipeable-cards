@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.spartapps.swipeable.demo.data.CardData
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
+import com.spartapps.swipeablecards.ui.lazy.items
 
 @Composable
 fun CardsScreen(
