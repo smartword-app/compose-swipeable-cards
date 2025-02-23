@@ -95,6 +95,7 @@ fun <T> SwipeableCards(
                     } else {
                         true
                     },
+                    scale = 1f,
                     onDragOffsetChange = {
                         state.onDragOffsetChange(it)
                     }

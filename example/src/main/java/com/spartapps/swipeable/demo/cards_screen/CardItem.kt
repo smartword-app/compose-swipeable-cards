@@ -33,6 +33,7 @@ import com.spartapps.swipeable.demo.utils.rememberDominantColor
 @Composable
 fun CardItem(
     modifier: Modifier = Modifier,
+    index: Int,
     cardData: CardData,
     offset: Offset,
 ) {
@@ -83,6 +84,12 @@ fun CardItem(
                             verticalArrangement = Arrangement.spacedBy(5.dp)
                         ) {
                             Text(
+                                text = index.toString(),
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Text(
                                 text = cardData.title,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
@@ -114,6 +121,7 @@ fun CardItem(
 fun CardItemPreview() {
     ComposeSwipeableCardsTheme {
         CardItem(
+            index = 0,
             cardData = sampleData.first(),
             offset = Offset.Zero
         )

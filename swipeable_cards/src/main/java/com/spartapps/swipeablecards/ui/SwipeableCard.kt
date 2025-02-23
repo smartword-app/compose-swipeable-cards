@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -25,6 +26,7 @@ internal fun SwipeableCard(
     animations: SwipeableCardsAnimations,
     factors: SwipeableCardsFactors,
     draggable: Boolean,
+    scale: Float,
     onDragOffsetChange: (Offset) -> Unit,
     onSwipe: (SwipeableCardDirection) -> Unit,
     content: @Composable (Offset) -> Unit,
@@ -51,6 +53,7 @@ internal fun SwipeableCard(
 
     Box(
         modifier = modifier
+            .scale(scale)
             .offset {
                 if (isDragging) {
                     offset.round()
@@ -73,6 +76,7 @@ internal fun SwipeableCard(
                                     onSwipe(SwipeableCardDirection.Left)
                                 }
                                 offset = Offset.Zero
+                                onDragOffsetChange(offset)
                                 isDragging = false
                             },
                             onDrag = { change, dragAmount ->

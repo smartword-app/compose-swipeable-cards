@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.round
 import com.spartapps.swipeablecards.state.SwipeableCardsState
@@ -78,9 +79,7 @@ fun <T> LazySwipeableCards(
         indexes.forEach { index ->
             animatables.putIfAbsent(index, Animatable(Offset.Zero, Offset.VectorConverter))
         }
-    }
 
-    LaunchedEffect(indexes) {
         animatables.forEach { index, animatable ->
             launch {
                 animatable.animateTo(
@@ -91,8 +90,15 @@ fun <T> LazySwipeableCards(
         }
     }
 
+    LaunchedEffect(indexes) {
+
+    }
+
     LazyLayout(
         modifier = modifier
+            .onGloballyPositioned {
+                state.onSizeChange(it.size)
+            }
             .padding(
                 end = properties.padding,
                 top = properties.padding.div(2)

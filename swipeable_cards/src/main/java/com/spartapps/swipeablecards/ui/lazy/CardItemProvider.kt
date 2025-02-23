@@ -56,6 +56,7 @@ class CardItemProvider<T>(
     @Composable
     override fun Item(index: Int, key: Any) {
         val item = itemsState.value.getOrNull(index)
+        val scale = factors.scaleFactor(index, state, properties)
         SwipeableCard(
             onSwipe = { direction ->
                 state.moveNext()
@@ -69,11 +70,12 @@ class CardItemProvider<T>(
             } else {
                 true
             },
+            scale = scale,
             onDragOffsetChange = {
                 state.onDragOffsetChange(it)
             }
         ) { offset ->
-            item?.itemContent?.invoke(item.item, offset)
+            item?.itemContent?.invoke(item.item, index, offset)
         }
     }
 
