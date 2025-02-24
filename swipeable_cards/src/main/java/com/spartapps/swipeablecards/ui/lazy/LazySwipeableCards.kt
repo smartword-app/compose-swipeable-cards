@@ -90,10 +90,6 @@ fun <T> LazySwipeableCards(
         }
     }
 
-    LaunchedEffect(indexes) {
-
-    }
-
     LazyLayout(
         modifier = modifier
             .onGloballyPositioned {

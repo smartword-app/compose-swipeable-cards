@@ -16,8 +16,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.round
 import com.spartapps.swipeablecards.ui.animation.SwipeableCardsAnimations
+import com.spartapps.swipeablecards.utils.accelerateX
+import com.spartapps.swipeablecards.utils.consume
 
 @Composable
 internal fun SwipeableCard(
@@ -31,6 +35,7 @@ internal fun SwipeableCard(
     onSwipe: (SwipeableCardDirection) -> Unit,
     content: @Composable (Offset) -> Unit,
 ) {
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val threshold = with(LocalDensity.current) {
         properties.swipeThreshold.toPx()
     }
@@ -81,8 +86,11 @@ internal fun SwipeableCard(
                             },
                             onDrag = { change, dragAmount ->
                                 change.consume()
-                                offset += dragAmount.copy(
-                                    x = dragAmount.x * properties.draggingAcceleration
+                                offset = offset.consume(
+                                    other = dragAmount.accelerateX(
+                                        acceleration = properties.draggingAcceleration
+                                    ),
+                                    reverseX = isRtl,
                                 )
                                 onDragOffsetChange(offset)
                             }
