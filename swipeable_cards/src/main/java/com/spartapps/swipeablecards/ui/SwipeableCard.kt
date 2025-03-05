@@ -88,7 +88,7 @@ internal fun SwipeableCard(
                                 change.consume()
                                 offset = offset.consume(
                                     other = dragAmount.accelerateX(
-                                        acceleration = properties.draggingAcceleration
+                                        acceleration = properties.draggingAcceleration,
                                     ),
                                     reverseX = isRtl,
                                 )
