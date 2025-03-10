@@ -13,6 +13,7 @@ https://github.com/user-attachments/assets/70cb20fc-38c6-4fb3-a9d6-dca79f9e005e
 
 ## Features
 - ⚡️ Lazy loading to support large data
+- 📚 Programmatic Card Swiping
 - 🎯 Smooth, physics-based swipe animations
 - 🎨 Fully customizable card content
 - 🔄 Left/Right swipe actions
@@ -70,6 +71,31 @@ fun SwipeableCardsExample() {
             )
         }
     }
+}
+```
+
+### Programmatic Card Swiping
+
+You can now programmatically swipe cards in either direction using the new `swipe()` method:
+
+```kotlin
+// Add swipe buttons to your UI
+FloatingActionButton(
+    onClick = { state.swipe(SwipeableCardDirection.Left) }
+) {
+    Icon(
+        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+        contentDescription = null,
+    )
+}
+
+FloatingActionButton(
+    onClick = { state.swipe(SwipeableCardDirection.Right) }
+) {
+    Icon(
+        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+        contentDescription = null,
+    )
 }
 ```
 
