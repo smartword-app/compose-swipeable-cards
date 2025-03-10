@@ -7,6 +7,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.geometry.Offset
 import com.spartapps.swipeablecards.state.SwipeableCardsState
 import com.spartapps.swipeablecards.ui.SwipeableCard
 import com.spartapps.swipeablecards.ui.SwipeableCardDirection
@@ -15,7 +16,7 @@ import com.spartapps.swipeablecards.ui.SwipeableCardsProperties
 import com.spartapps.swipeablecards.ui.animation.SwipeableCardsAnimations
 
 @Composable
-fun <T>rememberItemProvider(
+internal fun <T> rememberItemProvider(
     state: SwipeableCardsState,
     properties: SwipeableCardsProperties,
     animations: SwipeableCardsAnimations,
@@ -28,7 +29,8 @@ fun <T>rememberItemProvider(
     return remember {
         CardItemProvider<T>(
             itemsState = derivedStateOf {
-                val layoutScope = LazySwipeableCardsScopeImpl<T>().apply(customLazyListScopeState.value)
+                val layoutScope =
+                    LazySwipeableCardsScopeImpl<T>().apply(customLazyListScopeState.value)
                 layoutScope.items
             },
             state = state,
@@ -57,11 +59,22 @@ class CardItemProvider<T>(
     override fun Item(index: Int, key: Any) {
         val item = itemsState.value.getOrNull(index)
         val scale = factors.scaleFactor(index, state, properties)
+
+        val offset = remember {
+            derivedStateOf {
+                state.dragOffsets.getOrDefault(
+                    key = index,
+                    defaultValue = Offset.Zero,
+                )
+            }
+        }
+
         SwipeableCard(
             onSwipe = { direction ->
                 state.moveNext()
                 item?.let { cardItem -> onSwipe(cardItem.item, direction) }
             },
+            offset = offset,
             properties = properties,
             animations = animations,
             factors = factors,
@@ -71,9 +84,12 @@ class CardItemProvider<T>(
                 true
             },
             scale = scale,
-            onDragOffsetChange = {
-                state.onDragOffsetChange(it)
-            }
+            onDragOffsetChange = { offset ->
+                state.onDragOffsetChange(
+                    index = index,
+                    offset = offset,
+                )
+            },
         ) { offset ->
             item?.itemContent?.invoke(item.item, index, offset)
         }
@@ -81,11 +97,5 @@ class CardItemProvider<T>(
 
     fun getItem(index: Int): T {
         return itemsState.value[index].item
-    }
-
-    fun getVisibleCardIndexes(): List<Int> {
-        val firstIndex = state.currentCardIndex
-        val lastIndex = (firstIndex + properties.visibleCardsInStack - 1).coerceAtMost(itemCount - 1)
-        return (firstIndex..lastIndex).toList()
     }
 }

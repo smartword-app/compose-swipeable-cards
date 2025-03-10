@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,7 @@ import com.spartapps.swipeablecards.utils.consume
 @Composable
 internal fun SwipeableCard(
     modifier: Modifier = Modifier,
+    offset: State<Offset>,
     properties: SwipeableCardsProperties,
     animations: SwipeableCardsAnimations,
     factors: SwipeableCardsFactors,
@@ -35,20 +37,22 @@ internal fun SwipeableCard(
     onSwipe: (SwipeableCardDirection) -> Unit,
     content: @Composable (Offset) -> Unit,
 ) {
+    val offset by offset
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val threshold = with(LocalDensity.current) {
         properties.swipeThreshold.toPx()
     }
     var isDragging by remember { mutableStateOf(false) }
-    var offset by remember { mutableStateOf(Offset.Zero) }
 
     val animatedOffset by animateOffsetAsState(
         targetValue = offset,
         animationSpec = animations.cardsAnimationSpec,
+        finishedListener = {
+        }
     )
 
     val rotationAnimation by animateFloatAsState(
-        targetValue = if (properties.enableRotation && isDragging) {
+        targetValue = if (properties.enableRotation) {
             factors.rotationFactor(offset)
         } else {
             0f
@@ -80,19 +84,18 @@ internal fun SwipeableCard(
                                 } else if (offset.x < -threshold) {
                                     onSwipe(SwipeableCardDirection.Left)
                                 }
-                                offset = Offset.Zero
-                                onDragOffsetChange(offset)
+                                onDragOffsetChange(Offset.Zero)
                                 isDragging = false
                             },
                             onDrag = { change, dragAmount ->
                                 change.consume()
-                                offset = offset.consume(
+                                val newOffset = offset.consume(
                                     other = dragAmount.accelerateX(
                                         acceleration = properties.draggingAcceleration,
                                     ),
                                     reverseX = isRtl,
                                 )
-                                onDragOffsetChange(offset)
+                                onDragOffsetChange(newOffset)
                             }
                         )
                     }

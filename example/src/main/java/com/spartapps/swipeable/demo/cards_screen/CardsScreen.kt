@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spartapps.swipeable.demo.data.CardData
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
+import com.spartapps.swipeablecards.ui.SwipeableCardDirection
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 import com.spartapps.swipeablecards.ui.lazy.items
 
@@ -34,7 +37,7 @@ fun CardsScreen(
         modifier = modifier,
     ) {
         LazySwipeableCards(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(20.dp),
             state = state,
             onSwipe = { item, direction ->
                 Log.d("CardsScreen", "onSwipe: $item, $direction")
@@ -74,7 +77,34 @@ fun CardsScreen(
                 onClick = { state.goBack() }
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    imageVector = Icons.Outlined.Refresh,
+                    contentDescription = null
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            FloatingActionButton(
+                onClick = { state.swipe(SwipeableCardDirection.Left) }
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = null,
+                )
+            }
+
+            FloatingActionButton(
+                onClick = { state.swipe(SwipeableCardDirection.Right) }
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = null
                 )
             }
