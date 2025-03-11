@@ -46,7 +46,7 @@ val sampleData = listOf(
     )
 )
 
-val largeData = (0..1000).map {
+val largeData = (0..<1000).map {
     CardData(
         id = it,
         title = "Mountain Sunrise",
