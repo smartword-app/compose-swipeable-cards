@@ -9,7 +9,7 @@
 An efficient, lightweight, modern Jetpack Compose library that provides smooth Tinder-style card swiping interactions using Jetpack Compose.
 
 ## Video Example
-https://github.com/user-attachments/assets/70cb20fc-38c6-4fb3-a9d6-dca79f9e005e
+https://github.com/user-attachments/assets/240f8279-1c13-4a97-8fbd-465e09514921
 
 ## Features
 - ⚡️ Lazy loading to support large data
