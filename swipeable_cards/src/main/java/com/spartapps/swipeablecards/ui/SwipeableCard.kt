@@ -47,13 +47,11 @@ internal fun SwipeableCard(
     val animatedOffset by animateOffsetAsState(
         targetValue = offset,
         animationSpec = animations.cardsAnimationSpec,
-        finishedListener = {
-        }
     )
 
     val rotationAnimation by animateFloatAsState(
         targetValue = if (properties.enableRotation) {
-            factors.rotationFactor(offset)
+            factors.rotationFactor(animatedOffset)
         } else {
             0f
         },
