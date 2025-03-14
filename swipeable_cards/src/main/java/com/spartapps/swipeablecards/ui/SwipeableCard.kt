@@ -117,6 +117,6 @@ internal fun SwipeableCard(
                 }
             ),
     ) {
-        content(internalOffset)
+        content(animatedOffset)
     }
 }
