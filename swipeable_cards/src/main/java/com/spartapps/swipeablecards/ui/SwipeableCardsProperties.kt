@@ -7,6 +7,7 @@ object SwipeableCardsDefaults {
     const val VISIBLE_CARDS_IN_STACK = 3
     const val LOCK_BELOW_CARD_DRAGGING = true
     const val ENABLE_ROTATION = true
+    const val ENABLE_HAPTIC_FEEDBACK_ON_THRESHOLD = true
     const val DRAGGING_ACCELERATION = 1f
     val STACKED_CARDS_OFFSET = 30.dp
     val SWIPE_THRESHOLD = 100.dp
@@ -20,6 +21,7 @@ object SwipeableCardsDefaults {
  * @property swipeThreshold Distance threshold required to trigger a swipe action. Defaults to [SwipeableCardsDefaults.SWIPE_THRESHOLD].
  * @property lockBelowCardDragging When true, prevents cards below the top card from being dragged. Defaults to [SwipeableCardsDefaults.LOCK_BELOW_CARD_DRAGGING].
  * @property enableRotation Enables rotation animation during card swipes. Defaults to [SwipeableCardsDefaults.ENABLE_ROTATION].
+ * @property enableHapticFeedbackOnThreshold Enables haptic feedback when card swipe passes the threshold. Defaults to [SwipeableCardsDefaults.ENABLE_HAPTIC_FEEDBACK_ON_THRESHOLD].
  * @property stackedCardsOffset Offset between stacked cards in order to see them. Defaults to [SwipeableCardsDefaults.STACKED_CARDS_OFFSET].
  * @property draggingAcceleration Multiplier for drag gesture sensitivity. Higher values make cards more responsive to drag gestures. Defaults to [SwipeableCardsDefaults.DRAGGING_ACCELERATION].
  */
@@ -28,6 +30,7 @@ data class SwipeableCardsProperties(
     val swipeThreshold: Dp = SwipeableCardsDefaults.SWIPE_THRESHOLD,
     val lockBelowCardDragging: Boolean = SwipeableCardsDefaults.LOCK_BELOW_CARD_DRAGGING,
     val enableRotation: Boolean = SwipeableCardsDefaults.ENABLE_ROTATION,
+    val enableHapticFeedbackOnThreshold: Boolean = SwipeableCardsDefaults.ENABLE_HAPTIC_FEEDBACK_ON_THRESHOLD,
     val stackedCardsOffset: Dp = SwipeableCardsDefaults.STACKED_CARDS_OFFSET,
     val draggingAcceleration: Float = SwipeableCardsDefaults.DRAGGING_ACCELERATION,
 )

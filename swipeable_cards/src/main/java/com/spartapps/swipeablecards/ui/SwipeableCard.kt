@@ -15,14 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.round
 import com.spartapps.swipeablecards.ui.animation.SwipeableCardsAnimations
 import com.spartapps.swipeablecards.utils.accelerateX
 import com.spartapps.swipeablecards.utils.consume
+import kotlin.math.absoluteValue
 
 @Composable
 internal fun SwipeableCard(
@@ -37,15 +40,17 @@ internal fun SwipeableCard(
     onSwipe: (SwipeableCardDirection) -> Unit,
     content: @Composable (Offset) -> Unit,
 ) {
-    val offset by offset
+    val internalOffset by offset
+    val haptic = LocalHapticFeedback.current
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val threshold = with(LocalDensity.current) {
         properties.swipeThreshold.toPx()
     }
     var isDragging by remember { mutableStateOf(false) }
+    var firstHaptic by remember { mutableStateOf(true) }
 
     val animatedOffset by animateOffsetAsState(
-        targetValue = offset,
+        targetValue = internalOffset,
         animationSpec = animations.cardsAnimationSpec,
     )
 
@@ -63,7 +68,7 @@ internal fun SwipeableCard(
             .scale(scale)
             .offset {
                 if (isDragging) {
-                    offset.round()
+                    internalOffset.round()
                 } else {
                     animatedOffset.round()
                 }
@@ -77,9 +82,9 @@ internal fun SwipeableCard(
                                 isDragging = true
                             },
                             onDragEnd = {
-                                if (offset.x > threshold) {
+                                if (internalOffset.x > threshold) {
                                     onSwipe(SwipeableCardDirection.Right)
-                                } else if (offset.x < -threshold) {
+                                } else if (internalOffset.x < -threshold) {
                                     onSwipe(SwipeableCardDirection.Left)
                                 }
                                 onDragOffsetChange(Offset.Zero)
@@ -87,13 +92,23 @@ internal fun SwipeableCard(
                             },
                             onDrag = { change, dragAmount ->
                                 change.consume()
-                                val newOffset = offset.consume(
+                                val newOffset = internalOffset.consume(
                                     other = dragAmount.accelerateX(
                                         acceleration = properties.draggingAcceleration,
                                     ),
                                     reverseX = isRtl,
                                 )
                                 onDragOffsetChange(newOffset)
+                                if (properties.enableHapticFeedbackOnThreshold) {
+                                    if (internalOffset.x.absoluteValue > threshold) {
+                                        if (firstHaptic) {
+                                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                            firstHaptic = false
+                                        }
+                                    } else {
+                                        firstHaptic = true
+                                    }
+                                }
                             }
                         )
                     }
@@ -102,6 +117,6 @@ internal fun SwipeableCard(
                 }
             ),
     ) {
-        content(offset)
+        content(internalOffset)
     }
 }
