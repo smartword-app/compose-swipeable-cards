@@ -95,7 +95,7 @@ class CardItemProvider<T>(
         }
     }
 
-    fun getItem(index: Int): T {
-        return itemsState.value[index].item
+    fun getItem(index: Int): T? {
+        return itemsState.value.getOrNull(index)?.item
     }
 }
