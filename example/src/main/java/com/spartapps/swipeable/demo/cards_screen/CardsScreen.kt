@@ -8,16 +8,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -38,6 +46,7 @@ fun ActionButton(
     onClick: () -> Unit,
     icon: ImageVector,
     text: String,
+    enabled: Boolean = true,
     contentDescription: String? = null
 ) {
     Column(
@@ -45,7 +54,12 @@ fun ActionButton(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         FloatingActionButton(
-            onClick = onClick
+            onClick = onClick,
+            containerColor = if (enabled) {
+                FloatingActionButtonDefaults.containerColor
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            }
         ) {
             Icon(
                 imageVector = icon,
@@ -66,6 +80,8 @@ fun CardsScreen(
     data: List<CardData>,
     modifier: Modifier,
 ) {
+    var indexInput by remember { mutableStateOf(0.toString()) }
+
     val state = rememberSwipeableCardsState(
         itemCount = { data.size }
     )
@@ -110,7 +126,8 @@ fun CardsScreen(
             ActionButton(
                 onClick = { state.goBack() },
                 icon = Icons.Outlined.Refresh,
-                text = "Undo"
+                text = "Undo",
+                enabled = state.canSwipeBack.value,
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -127,6 +144,24 @@ fun CardsScreen(
                 icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 text = "Swipe\nLeft"
             )
+
+            Column {
+                OutlinedTextField(
+                    modifier = Modifier.width(100.dp),
+                    value = indexInput,
+                    onValueChange = { indexInput = it },
+                    label = { Text("Index") }
+                )
+                Button(
+                    onClick = {
+                        indexInput.toIntOrNull()?.let {
+                            state.setCurrentIndex(it)
+                        }
+                    }
+                ) {
+                    Text("Set Index")
+                }
+            }
 
             ActionButton(
                 onClick = { state.swipe(SwipeableCardDirection.Right) },
