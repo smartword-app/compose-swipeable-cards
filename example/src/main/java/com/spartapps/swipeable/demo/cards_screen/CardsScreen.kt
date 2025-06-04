@@ -15,10 +15,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Button
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,52 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.spartapps.swipeable.demo.data.CardData
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
 import com.spartapps.swipeablecards.ui.SwipeableCardDirection
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 import com.spartapps.swipeablecards.ui.lazy.items
-
-/**
- * Reusable action button component with text label
- */
-@Composable
-fun ActionButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    icon: ImageVector,
-    text: String,
-    enabled: Boolean = true,
-    contentDescription: String? = null
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        FloatingActionButton(
-            onClick = onClick,
-            containerColor = if (enabled) {
-                FloatingActionButtonDefaults.containerColor
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            }
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription
-            )
-        }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            textAlign = TextAlign.Center,
-            text = text,
-            style = MaterialTheme.typography.labelLarge
-        )
-    }
-}
 
 @Composable
 fun CardsScreen(
