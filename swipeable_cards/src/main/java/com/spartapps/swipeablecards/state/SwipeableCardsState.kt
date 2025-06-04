@@ -53,7 +53,7 @@ class SwipeableCardsState(
     /**
      * Indicates whether backwards navigation is possible (true if not at first card).
      */
-    var canSwipeBack by mutableStateOf(currentCardIndex > 0)
+    var canSwipeBack = derivedStateOf { currentCardIndex > 0 }
         private set
 
     val visibleCardIndexes = derivedStateOf {
@@ -82,7 +82,6 @@ class SwipeableCardsState(
         swipingVisibleCards.remove(currentCardIndex)
         if (currentCardIndex > 0) {
             currentCardIndex--
-            canSwipeBack = currentCardIndex > 0
             dragOffsets.remove(currentCardIndex)
             swipingVisibleCards.remove(currentCardIndex)
         }
@@ -97,7 +96,6 @@ class SwipeableCardsState(
         swipingVisibleCards.remove(currentCardIndex - 1)
         if (currentCardIndex < itemCount()) {
             currentCardIndex++
-            canSwipeBack = currentCardIndex > 0
         }
     }
 
@@ -116,5 +114,18 @@ class SwipeableCardsState(
         swipingVisibleCards.add(currentCardIndex)
         dragOffsets[currentCardIndex] = Offset(targetX, 0f)
         moveNext()
+    }
+
+    /**
+     * Sets the current card index in the stack.
+     * Clears any drag offsets associated with the previous card.
+     * If the index is out of bounds, the method does nothing.
+     * @param index The index to set as the current card.
+     */
+    fun setCurrentIndex(index: Int) {
+        if (index in 0..<itemCount()) {
+            currentCardIndex = index
+            dragOffsets.clear()
+        }
     }
 }
